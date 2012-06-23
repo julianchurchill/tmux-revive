@@ -1,6 +1,12 @@
 Like tmuxinator.
 Sample project to practice ruby/rspec/cucumber.
 
+= Todo =
+
+ - TDD TmuxExecutor, TmuxRevive, TmuxSession
+
+= Features =
+
 == Save ==
 
  - Save window title
