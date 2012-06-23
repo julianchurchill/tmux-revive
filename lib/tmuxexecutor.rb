@@ -1,18 +1,4 @@
-class CommandLine
-
-  def messages
-    messages ||= []
-  end
-
-  def puts message
-    @messages << message
-  end
-
-end
-
-def command_line
-  @command_line ||= CommandLine.new
-end
+require_relative 'commandexecutor'
 
 class TmuxExecutor
   TMUX_LIST_WINDOWS_REGEX = /^\d+: (.*?) \[/
