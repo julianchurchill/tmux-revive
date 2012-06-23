@@ -4,6 +4,8 @@ Sample project to practice ruby/rspec/cucumber.
 == Save ==
 
  - Save window title
+   - Auto window titles should not be saved, as tmux infers them from the current command
+ - Save to text file
  - Save window number
  - Save panes
     - Save pane position
@@ -16,10 +18,12 @@ Sample project to practice ruby/rspec/cucumber.
 
 == List saved sessions ==
 
+ - List sessions from text files
  - Full content
  - Summarise content
 
 == Restore ==
 
+ - Restore from text file
  - Pick a saved session and reproduce it
 

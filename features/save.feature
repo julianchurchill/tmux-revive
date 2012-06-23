@@ -4,6 +4,6 @@ Feature: tmux session saving
     I want to be able to save my tmux session for later restoration
 
     Scenario: Single window saving
-        Given a single tmux window with a single pane
+        Given a single tmux window with a title of "window title"
         When I trigger a session save
         Then the window title should be saved
