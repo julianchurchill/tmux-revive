@@ -4,18 +4,18 @@ describe TmuxExecutor do
 
   TYPICAL_TMUX_LIST_WINDOWS_OUTPUT = "1: test-title [151x41] [layout 44eb,151x41,0,0[151x28,0,0,151x12,0,29]] (active)"
 
-  it "extracts the window name from the output of tmux list-windows" do
-    t = TmuxExecutor.new
-    t.should_receive(:'`').with('tmux list-windows') { TYPICAL_TMUX_LIST_WINDOWS_OUTPUT }
+  let(:tmuxexecutor) { TmuxExecutor.new }
 
-    t.window_title.should == "test-title"
+  it "extracts the window name from the output of tmux list-windows" do
+    tmuxexecutor.should_receive(:'`').with('tmux list-windows') { TYPICAL_TMUX_LIST_WINDOWS_OUTPUT }
+
+    tmuxexecutor.window_title.should == "test-title"
   end
 
   it "sets the window title" do
-    t = TmuxExecutor.new
-    t.should_receive(:'`').with('tmux rename-window trevor')
+    tmuxexecutor.should_receive(:'`').with('tmux rename-window trevor')
 
-    t.set_window_title "trevor"
+    tmuxexecutor.set_window_title "trevor"
   end
 
 end
