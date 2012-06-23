@@ -16,7 +16,9 @@ class TmuxExecutor
   end
 
   def extract_window_title input
-    TMUX_LIST_WINDOWS_REGEX.match( input )[1]
+    match = TMUX_LIST_WINDOWS_REGEX.match( input )
+    return match[1] if match != nil
+    ""
   end
 end
 

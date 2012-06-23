@@ -1,11 +1,15 @@
 class CommandExecutor
 
   def messages
-    messages ||= []
+    @messages ||= []
   end
 
   def puts message
-    @messages << message
+    messages << message
+  end
+
+  def gets
+    ""
   end
 
 end
