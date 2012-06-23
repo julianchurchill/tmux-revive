@@ -1,0 +1,4 @@
+Like tmuxinator.
+Sample project to practice ruby/rspec/cucumber.
+
+ - Cuke tests
