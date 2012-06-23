@@ -11,4 +11,11 @@ describe TmuxExecutor do
     t.window_title.should == "test-title"
   end
 
+  it "sets the window title" do
+    t = TmuxExecutor.new
+    t.should_receive(:'`').with('tmux rename-window trevor')
+
+    t.set_window_title "trevor"
+  end
+
 end

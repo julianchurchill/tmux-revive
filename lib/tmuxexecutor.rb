@@ -11,5 +11,10 @@ class TmuxExecutor
     return match[1] if match != nil
     ""
   end
+
+  def set_window_title title
+    `tmux rename-window #{title}`
+  end
+
 end
 
