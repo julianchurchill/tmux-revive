@@ -1,5 +1,4 @@
 class TmuxSession
-  def window_title
-    ""
-  end
+  attr_accessor :window_title
+
 end
