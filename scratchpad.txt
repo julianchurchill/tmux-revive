@@ -1,4 +1,25 @@
 Like tmuxinator.
 Sample project to practice ruby/rspec/cucumber.
 
- - Cuke tests
+== Save ==
+
+ - Save window title
+ - Save window number
+ - Save panes
+    - Save pane position
+    - Save pane content
+        - Currently running command
+            - All running commands/background jobs
+            - Special case for vim using viminfo/vim sessions?
+        - Terminal history
+        - Command history
+
+== List saved sessions ==
+
+ - Full content
+ - Summarise content
+
+== Restore ==
+
+ - Pick a saved session and reproduce it
+
