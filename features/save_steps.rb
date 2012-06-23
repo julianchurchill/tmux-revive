@@ -7,6 +7,10 @@ class TmuxExecutorMock
   def window_title
     @title
   end
+
+  def set_window_title title
+    @title = title
+  end
 end
 
 def tmux
@@ -19,11 +23,11 @@ end
 
 When /^I trigger a session save$/ do
   @reviver = TmuxRevive.new tmux
-  @reviver.save
+  @session = @reviver.save
 end
 
 Then /^the window title should be saved$/ do
-  @reviver.saved_session( 0 ).window_title.should == tmux.title
+  @session.window_title.should == tmux.title
 end
 
 Given /^a saved tmux session with a window title of "(.*?)"$/ do |title|

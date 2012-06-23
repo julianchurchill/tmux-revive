@@ -7,16 +7,13 @@ class TmuxRevive
   end
 
   def save
-    @window_title = @tmux_command_line.window_title
-  end
-
-  def saved_session index
     s = TmuxSession.new
-    s.window_title = @window_title
+    s.window_title = @tmux_command_line.window_title
     s
   end
 
   def restore session
+    @tmux_command_line.set_window_title session.window_title
   end
 
 end

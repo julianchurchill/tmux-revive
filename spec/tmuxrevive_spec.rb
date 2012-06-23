@@ -3,23 +3,22 @@ require_relative '../lib/tmuxexecutor'
 
 describe TmuxRevive do
 
-  it "calls tmux command line to find window title upon save" do
-    tmux_command_line = double( "TmuxExecutor" )
-    tmux_revive = TmuxRevive.new tmux_command_line
-    tmux_command_line.should_receive( :window_title ) { "" }
-
-    tmux_revive.save
-
-  end
-
   it "stores current tmux window title upon save" do
     tmux_command_line = double( "TmuxExecutor" )
-    tmux_revive = TmuxRevive.new tmux_command_line
     tmux_command_line.should_receive( :window_title ) { "title" }
+    tmux_revive = TmuxRevive.new tmux_command_line
 
-    tmux_revive.save
+    tmux_revive.save.window_title.should == "title"
+  end
 
-    tmux_revive.saved_session( 0 ).window_title.should == "title"
+  it "restores tmux window title from session on restore" do
+    session = TmuxSession.new
+    session.window_title = "title"
+    tmux_command_line = double( "TmuxExecutor" )
+    tmux_command_line.should_receive( :set_window_title ).with( "title" )
+    tmux_revive = TmuxRevive.new tmux_command_line
+
+    tmux_revive.restore session
   end
 
 end
