@@ -15,6 +15,8 @@ def command_line
 end
 
 class TmuxExecutor
+  TMUX_LIST_WINDOWS_REGEX = /^\d+: (.*?) \[/
+
   def initialize command_line
     @command_line = command_line
   end
@@ -23,7 +25,12 @@ class TmuxExecutor
   end
 
   def window_title
-    @command_line.puts "tmux window-name"
+    @command_line.puts "tmux list-windows"
+    extract_window_title @command_line.gets
+  end
+
+  def extract_window_title input
+    TMUX_LIST_WINDOWS_REGEX.match( input )[1]
   end
 end
 
