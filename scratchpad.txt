@@ -3,16 +3,16 @@ Sample project to practice ruby/rspec/cucumber.
 
 = Todo =
 
- - TDD CommandLine
-   - How to test executing commands and capturing stdout?
+  - How do write a cucumber test to check 'window title' is saved without actually causing 'tmux list-windows' to be called? i.e  can we temporarily override what TmuxExecutor.window-title does? Is is appropriate?
 
 = Features =
 
 == Save ==
 
+ - Save to text file
  - Save window title
    - Auto window titles should not be saved, as tmux infers them from the current command
- - Save to text file
+   - Save all window titles
  - Save window number
  - Save panes
     - Save pane position
