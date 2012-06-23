@@ -16,4 +16,7 @@ class TmuxRevive
     s
   end
 
+  def restore session
+  end
+
 end

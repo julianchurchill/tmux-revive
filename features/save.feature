@@ -7,3 +7,9 @@ Feature: tmux session saving
         Given a single tmux window with a title of "window title"
         When I trigger a session save
         Then the window title should be saved
+
+    Scenario: Single window restore
+        Given a saved tmux session with a window title of "window title"
+        When I trigger a session restore
+        Then the window title should be restored
+

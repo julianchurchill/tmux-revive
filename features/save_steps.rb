@@ -1,7 +1,7 @@
 require_relative '../lib/tmuxexecutor'
 require_relative '../lib/tmuxrevive'
 
-class TmuxExecutorM
+class TmuxExecutorMock
   attr_accessor :title
 
   def window_title
@@ -10,7 +10,7 @@ class TmuxExecutorM
 end
 
 def tmux
-  @tmux ||= TmuxExecutorM.new
+  @tmux ||= TmuxExecutorMock.new
 end
 
 Given /^a single tmux window with a title of "(.*?)"$/ do |title|
@@ -24,5 +24,19 @@ end
 
 Then /^the window title should be saved$/ do
   @reviver.saved_session( 0 ).window_title.should == tmux.title
+end
+
+Given /^a saved tmux session with a window title of "(.*?)"$/ do |title|
+  @session = TmuxSession.new
+  @session.window_title = title
+end
+
+When /^I trigger a session restore$/ do
+  @reviver = TmuxRevive.new tmux
+  @reviver.restore @session
+end
+
+Then /^the window title should be restored$/ do
+  tmux.window_title.should == @session.window_title
 end
 
