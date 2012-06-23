@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+#$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+require_relative '../lib/tmuxrevive'
+require_relative '../lib/tmuxexecutor'
+
+reviver = TmuxRevive.new TmuxExecutor.new
+STDOUT << "Saving session...\n"
+session = reviver.save
+STDOUT << session.inspect << "\n"
+STDOUT << "Restoring session...\n"
+STDOUT << session.inspect << "\n"
+reviver.restore session
+STDOUT << "Restored\n"
