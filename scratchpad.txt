@@ -3,7 +3,8 @@ Sample project to practice ruby/rspec/cucumber.
 
 = Todo =
 
- - TDD TmuxExecutor, TmuxRevive, TmuxSession
+ - TDD CommandLine
+ - Whats the correct tmux command to get the current window name?
 
 = Features =
 
