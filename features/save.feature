@@ -13,3 +13,8 @@ Feature: tmux session saving
         When I trigger a session restore
         Then the window title should be restored
 
+    Scenario: On restore a new tmux session is created
+        Given a saved tmux session
+        When I trigger a session restore
+        Then a new tmux session should be started
+

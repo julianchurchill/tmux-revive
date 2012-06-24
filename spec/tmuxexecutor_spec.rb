@@ -18,4 +18,10 @@ describe TmuxExecutor do
     tmuxexecutor.set_window_title "trevor"
   end
 
+  it "starts a new session" do
+    tmuxexecutor.should_receive(:'`').with('tmux new-session')
+
+    tmuxexecutor.start_tmux_session
+  end
+
 end

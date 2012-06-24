@@ -13,6 +13,7 @@ class TmuxRevive
   end
 
   def restore session
+    @tmux_command_line.start_tmux_session
     @tmux_command_line.set_window_title session.window_title
   end
 

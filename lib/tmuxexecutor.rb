@@ -16,5 +16,9 @@ class TmuxExecutor
     `tmux rename-window #{title}`
   end
 
+  def start_tmux_session
+    `tmux new-session`
+  end
+
 end
 

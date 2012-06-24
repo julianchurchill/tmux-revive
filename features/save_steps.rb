@@ -4,9 +4,18 @@ require_relative '../lib/tmuxrevive'
 class TmuxExecutorMock
   attr_accessor :window_title
   attr_reader :set_window_title_arg
+  attr_reader :start_tmux_session_called
+
+  def initialize
+    @start_tmux_session_called = false
+  end
 
   def set_window_title set_window_title_arg
     @set_window_title_arg = set_window_title_arg
+  end
+
+  def start_tmux_session
+    @start_tmux_session_called = true
   end
 end
 
@@ -39,5 +48,13 @@ end
 
 Then /^the window title should be restored$/ do
   tmux.set_window_title_arg.should == @session.window_title
+end
+
+Given /^a saved tmux session$/ do
+  @session = TmuxSession.new
+end
+
+Then /^a new tmux session should be started$/ do
+  tmux.start_tmux_session_called.should == true
 end
 

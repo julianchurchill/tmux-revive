@@ -10,10 +10,10 @@ Sample project to practice ruby/rspec/cucumber.
 
 = Features =
 
+ - Save to text file, persistent store
  - Save all window titles
     - Restore all window titles in the order they were saved
  - Auto window titles should not be saved, as tmux infers them from the current command
- - Save to text file, persistent store
  - Save window number
  - Save panes
     - Save pane position
