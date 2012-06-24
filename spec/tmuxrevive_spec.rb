@@ -26,4 +26,10 @@ describe TmuxRevive do
     tmux_revive.restore session
   end
 
+  it "attaches to last session started" do
+    tmux_command_line.should_receive( :attach_session )
+
+    tmux_revive.restore TmuxSession.new
+  end
+
 end

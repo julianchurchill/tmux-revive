@@ -29,6 +29,15 @@ describe TmuxExecutor do
     tmuxexecutor.session_id.should == LAST_SESSION_ID
   end
 
-  it "if available uses session id to set window title"
+  it "attaches to session if session id is available" do
+    tmuxexecutor.should_receive(:'`').with('OLD_TMUX=$TMUX; TMUX=""; tmux new-session -d ; TMUX=$OLD_TMUX')
+    tmuxexecutor.should_receive(:'`').with('tmux list-sessions') { TYPICAL_TMUX_LIST_SESSIONS_OUTPUT }
+    tmuxexecutor.should_receive(:'`').with("OLD_TMUX=$TMUX; TMUX=\"\"; tmux attach -t #{LAST_SESSION_ID} ; TMUX=$OLD_TMUX")
+
+    tmuxexecutor.start_tmux_session
+    tmuxexecutor.attach_session
+  end
+
+  it "uses session id if available to set window title"
 
 end

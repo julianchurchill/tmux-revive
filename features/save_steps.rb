@@ -5,9 +5,11 @@ class TmuxExecutorMock
   attr_accessor :window_title
   attr_reader :set_window_title_arg
   attr_reader :start_tmux_session_called
+  attr_reader :attach_session_called
 
   def initialize
     @start_tmux_session_called = false
+    @attach_session_called = false
   end
 
   def set_window_title set_window_title_arg
@@ -16,6 +18,10 @@ class TmuxExecutorMock
 
   def start_tmux_session
     @start_tmux_session_called = true
+  end
+
+  def attach_session
+    @attach_session_called = true
   end
 end
 
@@ -56,5 +62,6 @@ end
 
 Then /^a new tmux session should be started$/ do
   tmux.start_tmux_session_called.should == true
+  tmux.attach_session_called.should == true
 end
 

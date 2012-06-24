@@ -33,5 +33,9 @@ class TmuxExecutor
     @session_id = matches.last if matches != nil
   end
 
+  def attach_session
+    `OLD_TMUX=$TMUX; TMUX=""; tmux attach -t #{@session_id} ; TMUX=$OLD_TMUX`
+  end
+
 end
 
