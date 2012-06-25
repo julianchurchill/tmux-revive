@@ -21,6 +21,15 @@ describe TmuxExecutor do
     tmuxexecutor.set_window_title "trevor"
   end
 
+  it "uses session id if available to set window title" do
+    tmuxexecutor.should_receive(:'`').with('OLD_TMUX=$TMUX; TMUX=""; tmux new-session -d ; TMUX=$OLD_TMUX')
+    tmuxexecutor.should_receive(:'`').with('tmux list-sessions') { TYPICAL_TMUX_LIST_SESSIONS_OUTPUT }
+    tmuxexecutor.start_tmux_session
+
+    tmuxexecutor.should_receive(:'`').with("tmux rename-window -t #{LAST_SESSION_ID} trevor")
+    tmuxexecutor.set_window_title "trevor"
+  end
+
   it "starts a new detached session and saves the session id" do
     tmuxexecutor.should_receive(:'`').with('OLD_TMUX=$TMUX; TMUX=""; tmux new-session -d ; TMUX=$OLD_TMUX')
     tmuxexecutor.should_receive(:'`').with('tmux list-sessions') { TYPICAL_TMUX_LIST_SESSIONS_OUTPUT }
@@ -32,12 +41,10 @@ describe TmuxExecutor do
   it "attaches to session if session id is available" do
     tmuxexecutor.should_receive(:'`').with('OLD_TMUX=$TMUX; TMUX=""; tmux new-session -d ; TMUX=$OLD_TMUX')
     tmuxexecutor.should_receive(:'`').with('tmux list-sessions') { TYPICAL_TMUX_LIST_SESSIONS_OUTPUT }
-    tmuxexecutor.should_receive(:'`').with("OLD_TMUX=$TMUX; TMUX=\"\"; tmux attach -t #{LAST_SESSION_ID} ; TMUX=$OLD_TMUX")
-
     tmuxexecutor.start_tmux_session
+
+    tmuxexecutor.should_receive(:'`').with("OLD_TMUX=$TMUX; TMUX=\"\"; tmux attach -t #{LAST_SESSION_ID} ; TMUX=$OLD_TMUX")
     tmuxexecutor.attach_session
   end
-
-  it "uses session id if available to set window title"
 
 end
