@@ -5,7 +5,7 @@ class TmuxExecutor
   attr_reader :session_id
 
   def initialize
-    @session_id = "-1"
+    @session_id = ""
   end
 
   def window_title
@@ -21,7 +21,7 @@ class TmuxExecutor
 
   def set_window_title title
     session_id_arg = ""
-    session_id_arg = "-t #{@session_id} " if session_id != -1
+    session_id_arg = "-t #{@session_id} " if session_id != ""
     `tmux rename-window #{session_id_arg}#{title}`
   end
 
