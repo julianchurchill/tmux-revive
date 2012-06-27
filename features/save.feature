@@ -18,3 +18,11 @@ Feature: tmux session saving
         When I trigger a session restore
         Then a new tmux session should be started
 
+    Scenario: A session can be restored by ID
+        Given a saved tmux session with a window title of "pears" and an ID of 1
+            And a saved tmux session with a window title of "bananas" and an ID of 2
+            And a saved tmux session with a window title of "apples" and an ID of 3
+        When I trigger a session restore of session 2
+        Then a new tmux session should be started
+            And the window title should be "bananas"
+
