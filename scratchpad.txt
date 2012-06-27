@@ -1,10 +1,9 @@
 Like tmuxinator.
 Sample project to practice ruby/rspec/cucumber.
 
-= Todo =
+ - Session IDs
 
- - 'Single window restore' story should include creating a new tmux session
-
+ - Would 'Aruba' be useful? It's a cucumber extension for testing command line programs.
  - Consider expanding existing cucumber stories to include arbitrary properties such as window size and position of panes in a scenario outline
    - Possibly try a couple of seperate properties stories before rationalizing
 
