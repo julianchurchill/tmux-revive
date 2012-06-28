@@ -25,10 +25,3 @@ Feature: tmux session saving
         When I trigger a session restore of session 2
         Then a new tmux session should be started
             And the window title should be "bananas"
-
-    Scenario: A session can be saved by one process and restored by a different one
-        Given a saved tmux session with a window title of "pears" and an ID of 1
-        When I start a new tmuxrevive process
-            And I trigger a session restore of session 1
-        Then a new tmux session should be started
-            And the window title should be "pears"
