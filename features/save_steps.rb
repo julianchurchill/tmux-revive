@@ -29,17 +29,16 @@ def tmux
   @tmux ||= TmuxExecutorMock.new
 end
 
+def all_sessions
+  @all_sessions ||= {}
+end
+
 Given /^a single tmux window with a title of "(.*?)"$/ do |title|
   tmux.window_title = title
 end
 
-When /^I trigger a session save$/ do
-  @reviver = TmuxRevive.new tmux
-  @session = @reviver.save
-end
-
-Then /^the window title should be saved$/ do
-  @session.window_title.should == tmux.window_title
+Given /^a saved tmux session$/ do
+  @session = TmuxSession.new
 end
 
 Given /^a saved tmux session with a window title of "(.*?)"$/ do |title|
@@ -51,8 +50,12 @@ Given /^a saved tmux session with a window title of "(.*?)" and an ID of (.*?)$/
   @session = TmuxSession.new
   @session.window_title = title
   @session.properties = { "id" => id }
-  @all_sessions ||= {}
-  @all_sessions[id] = @session
+  all_sessions[id] = @session
+end
+
+When /^I trigger a session save$/ do
+  @reviver = TmuxRevive.new tmux
+  @session = @reviver.save
 end
 
 When /^I trigger a session restore$/ do
@@ -62,19 +65,19 @@ end
 
 When /^I trigger a session restore of session (.*?)$/ do |id|
   @reviver = TmuxRevive.new tmux
-  @reviver.restore @all_sessions[id]
+  @reviver.restore all_sessions[id]
 end
 
-Then /^the window title should be "(.*?)"$/ do |window_title|
-  tmux.set_window_title_arg.should == window_title
+Then /^the window title should be saved$/ do
+  @session.window_title.should == tmux.window_title
 end
 
 Then /^the window title should be restored$/ do
   tmux.set_window_title_arg.should == @session.window_title
 end
 
-Given /^a saved tmux session$/ do
-  @session = TmuxSession.new
+Then /^the window title should be "(.*?)"$/ do |window_title|
+  tmux.set_window_title_arg.should == window_title
 end
 
 Then /^a new tmux session should be started$/ do
