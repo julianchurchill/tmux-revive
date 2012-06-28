@@ -47,9 +47,26 @@ Given /^a saved tmux session with a window title of "(.*?)"$/ do |title|
   @session.window_title = title
 end
 
+Given /^a saved tmux session with a window title of "(.*?)" and an ID of (.*?)$/ do |title,id|
+  @session = TmuxSession.new
+  @session.window_title = title
+  @session.properties = { "id" => id }
+  @all_sessions ||= {}
+  @all_sessions[id] = @session
+end
+
 When /^I trigger a session restore$/ do
   @reviver = TmuxRevive.new tmux
   @reviver.restore @session
+end
+
+When /^I trigger a session restore of session (.*?)$/ do |id|
+  @reviver = TmuxRevive.new tmux
+  @reviver.restore @all_sessions[id]
+end
+
+Then /^the window title should be "(.*?)"$/ do |window_title|
+  tmux.set_window_title_arg.should == window_title
 end
 
 Then /^the window title should be restored$/ do
