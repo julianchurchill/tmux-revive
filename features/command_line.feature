@@ -1,3 +1,4 @@
+@announce
 Feature: tmuxrevive command line program
     In order to be able to use tmuxrevive features
     As a tmux user
