@@ -1,6 +1,7 @@
 
 Before do
   @session_ids_to_kill = Set.new
+  @all_sessions = get_all_tmux_session_ids
 end
 
 After do
@@ -11,13 +12,13 @@ end
 
 Given /^a running tmux session with a window title of "(.*?)"$/ do |title|
   # -d is detached, -n is window name
-  `tmux new-session -d -n #{title} \;`
+  `TMUX= tmux new-session -d -n #{title} \;`
   @session_ids_to_kill.add( get_last_tmux_session_id )
 end
 
 Then /^a new real tmux session should be started$/ do
   new_session_id = get_last_tmux_session_id
-  @session_ids_to_kill.should_not_include new_session_id
+  @all_sessions.should_not include new_session_id
   @session_ids_to_kill.add( new_session_id )
 end
 
