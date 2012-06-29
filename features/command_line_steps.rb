@@ -1,16 +1,18 @@
 
 Before do
-  @test_session_id = nil
+  @session_ids_to_kill = []
 end
 
 After do
-  `tmux kill-session -t #{@test_session_id}` if @test_session_id
+  @session_ids_to_kill.each do |id|
+    `tmux kill-session -t #{id}`
+  end
 end
 
 Given /^a running tmux session with a window title of "(.*?)"$/ do |title|
   # -d is detached, -n is window name
   `tmux new-session -d -n #{title} \;`
-  @test_session_id = get_last_tmux_session_id
+  @session_ids_to_kill += [get_last_tmux_session_id]
 end
 
 Then /^a new real tmux session should be started$/ do
