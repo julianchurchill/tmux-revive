@@ -5,6 +5,7 @@ describe TmuxRevive do
   context "#save" do
     before(:each) do
       @tmuxrevive = TmuxRevive.new
+      @tmuxrevive.stub( :'`' ).with( "tmux list-windows" ).and_return( "1: luther [123x456] [layout bfde,123x45,0,] (active)" )
       Dir.stub( :exists? )
       Dir.stub( :mkdir )
       Dir.stub( :foreach )
@@ -50,7 +51,18 @@ describe TmuxRevive do
       @tmuxrevive.save
     end
 
-    it "saves the window title in the session file"
+    it "retrieves a window list from tmux" do
+      @tmuxrevive.should_receive( :'`' ).with( "tmux list-windows" )
+      @tmuxrevive.save
+    end
+
+    it "stores the window title in the session file" do
+      file = double('session file')
+      File.stub( :open ).and_yield( file )
+      file.should_receive( :write ).with( "window_title luther" )
+
+      @tmuxrevive.save
+    end
   end
 
 end
