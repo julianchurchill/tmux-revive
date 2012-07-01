@@ -3,7 +3,6 @@ class TmuxRevive
   SESSION_FILE = "session"
 
   def save
-    puts "saving to #{tmuxrevive_dir}"
     Dir.mkdir( "#{tmuxrevive_dir}" ) if not Dir.exists? tmuxrevive_dir
     File.open( "#{tmuxrevive_dir}/#{SESSION_FILE}.#{find_next_free_session_id}", 'w' ) { |f| f.write("") }
   end
