@@ -3,3 +3,4 @@
 require_relative '../lib/tmuxrevive'
 
 reviver = TmuxRevive.new
+reviver.save

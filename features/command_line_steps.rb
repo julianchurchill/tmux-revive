@@ -16,6 +16,14 @@ Given /^a running tmux session with a window title of "(.*?)"$/ do |title|
   @session_ids_to_kill.add( get_last_tmux_session_id )
 end
 
+Given /^a session file named "(.*?)" with:$/ do |filename, content|
+  step "a file named #{filename} with:#{content}"
+end
+
+Then /^a session file named "(.*?)" should exist$/ do |filename|
+  step "a file named \"#{File.expand_path( filename )}\" should exist"
+end
+
 Then /^a new real tmux session should be started$/ do
   new_session_id = get_last_tmux_session_id
   @all_sessions.should_not include new_session_id

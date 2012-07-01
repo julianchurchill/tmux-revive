@@ -4,16 +4,15 @@ Feature: tmuxrevive command line program
     As a tmux user
     I want to run tmuxrevive to save and restore sessions
 
+    @current, @no-clobber
     Scenario: A session can be saved to a file
-        Given a directory named ".sessions"
-        And a running tmux session with a window title of "pears"
+        Given a running tmux session with a window title of "pears"
         When I run `tmuxrevive save`
-        Then a file named ".sessions/session.1" should exist
-        And the file ".sessions/session.1" should contain "window_title pears"
+        Then a session file named "~/.tmuxrevive/session.1" should exist
+        And the file "~/.tmuxrevive/session.1" should contain "window_title pears"
 
     Scenario: A saved session can be restored from a file
-        Given a directory named ".sessions"
-        And a file named ".sessions/session.1" with:
+        Given a session file named "~/.tmuxrevive/session.1" with:
             """
             window_title pears
             """
