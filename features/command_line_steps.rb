@@ -17,11 +17,15 @@ Given /^a running tmux session with a window title of "(.*?)"$/ do |title|
 end
 
 Given /^a session file named "(.*?)" with:$/ do |filename, content|
-  step "a file named #{filename} with:#{content}"
+  step "a file named #{File.expand_path( filename )} with:#{content}"
 end
 
 Then /^a session file named "(.*?)" should exist$/ do |filename|
   step "a file named \"#{File.expand_path( filename )}\" should exist"
+end
+
+Then /^the session file "(.*?)" should contain "(.*?)"$/ do |filename, content|
+  step "the file \"#{File.expand_path( filename )}\" should contain \"#{content}\""
 end
 
 Then /^a new real tmux session should be started$/ do
