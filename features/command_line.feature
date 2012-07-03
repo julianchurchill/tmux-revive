@@ -7,7 +7,7 @@ Feature: tmuxrevive command line program
     @current
     Scenario: A session can be saved to a file
         Given a running tmux session with a window title of "pears"
-        When I run `tmuxrevive save`
+        When I run `tmuxrevive save` in the tmux session
         Then a session file named "~/.tmuxrevive/session.1" should exist
         And the session file "~/.tmuxrevive/session.1" should contain "window_title pears"
 
