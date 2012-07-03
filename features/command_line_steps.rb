@@ -20,7 +20,10 @@ Given /^a running tmux session with a window title of "(.*?)"$/ do |title|
 end
 
 Given /^a session file named "(.*?)" with:$/ do |filename, content|
-  step "a file named #{File.expand_path( filename )} with:#{content}"
+  steps "Given a file named \"#{File.expand_path( filename )}\" with:
+    \"\"\"
+    #{content}
+    \"\"\""
 end
 
 When /^I run `tmuxrevive save` in the tmux session$/ do
@@ -46,19 +49,5 @@ end
 Then /^the real tmux session window title should be "(.*?)"$/ do |title|
   real_window_title = get_window_name_for_session( get_last_tmux_session_id )
   real_window_title.should == title
-end
-
-def get_window_name_for_session id
-  `tmux list-windows -t #{id}`[/^.*?: (.*?) \[/, 1]
-end
-
-def exit_session id
-  send_command id, "exit"
-  `TMUX= tmux attach -t #{id} \;`
-end
-
-def send_command id, keys
-  `tmux send-keys -t #{id} \"#{keys}\"\;`
-  `tmux send-keys -t #{id} Enter \;`
 end
 
