@@ -4,7 +4,11 @@ class TmuxRevive
 
   def restore *args
     id = args.shift
-    File.open( "#{tmuxrevive_dir}/#{SESSION_FILE}.#{id}", 'r' )
+    File.open( "#{tmuxrevive_dir}/#{SESSION_FILE}.#{id}", 'r' ) do |f|
+      content = f.read
+      window_title = content[/window_title (.*)$/, 1 ]
+      `TMUX= tmux new-session -n #{window_title}`
+    end
   end
 
   def save *args
