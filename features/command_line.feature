@@ -4,13 +4,13 @@ Feature: tmuxrevive command line program
     As a tmux user
     I want to run tmuxrevive to save and restore sessions
 
-    @current
     Scenario: A session can be saved to a file
         Given a running tmux session with a window title of "pears"
         When I run `tmuxrevive save` in the tmux session
         Then a session file named "~/.tmuxrevive/session.1" should exist
         And the session file "~/.tmuxrevive/session.1" should contain "window_title pears"
 
+    @wip
     Scenario: A saved session can be restored from a file
         Given a session file named "~/.tmuxrevive/session.1" with:
             """
