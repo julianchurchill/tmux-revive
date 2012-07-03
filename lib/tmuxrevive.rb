@@ -2,7 +2,13 @@
 class TmuxRevive
   SESSION_FILE = "session"
 
-  def save
+  def restore *args
+    id = args.shift
+    File.open( "#{tmuxrevive_dir}/#{SESSION_FILE}.#{id}", 'r' )
+  end
+
+  def save *args
+    exit("save does not accept any arguments") unless args.empty?
     window_title = `tmux list-windows`[/^.*?: (.*?) \[/, 1]
     Dir.mkdir( "#{tmuxrevive_dir}" ) unless Dir.exists? tmuxrevive_dir
     File.open( "#{tmuxrevive_dir}/#{SESSION_FILE}.#{find_next_free_session_id}", 'w' ) { |f| f.write("window_title #{window_title}") }

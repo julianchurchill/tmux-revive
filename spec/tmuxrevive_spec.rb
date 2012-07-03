@@ -2,6 +2,18 @@ require_relative '../lib/tmuxrevive'
 
 describe TmuxRevive do
 
+  context "#restore" do
+    it "reads the session file indexed by the session id argument" do
+      tmuxrevive = TmuxRevive.new
+      File.should_receive( :open ).with( /#{ENV['HOME']}\/\.tmuxrevive\/session\.123/, 'r' )
+
+      tmuxrevive.restore 123
+    end
+
+    it "starts a new tmux session"
+    it "sets the window title from the session file"
+  end
+
   context "#save" do
     before(:each) do
       @tmuxrevive = TmuxRevive.new
@@ -10,6 +22,12 @@ describe TmuxRevive do
       Dir.stub( :mkdir )
       Dir.stub( :foreach )
       File.stub( :open )
+    end
+
+    it "does not accept arguments" do
+      @tmuxrevive.should_receive( :exit ).with( "save does not accept any arguments")
+
+      @tmuxrevive.save 123
     end
 
     it "creates the .tmuxrevive directory if it doesn't exist" do
