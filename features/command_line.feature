@@ -14,8 +14,8 @@ Feature: tmuxrevive command line program
     Scenario: A saved session can be restored from a file
         Given a session file named "~/.tmuxrevive/session.1" with:
             """
-            window_title pears
+            window_title apples
             """
         When I run `tmuxrevive restore 1`
         Then a new real tmux session should be started
-        And the real tmux session window title should be "pears"
+        And the real tmux session window title should be "apples"
