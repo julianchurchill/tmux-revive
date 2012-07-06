@@ -2,6 +2,18 @@
 class TmuxRevive
   SESSION_FILE = "session"
 
+  def list
+    output = ""
+    Dir.foreach( "#{tmuxrevive_dir}" ) do |entry|
+      session_id = entry[/^.*\.(\d+)/,1]
+      if session_id != nil
+        output += "session #{session_id}:\n"
+        File.open( "#{tmuxrevive_dir}/#{entry}" ) { |file| output += "    #{file.read}\n" }
+      end
+    end
+    puts output
+  end
+
   def restore *args
     id = args.shift
     File.open( "#{tmuxrevive_dir}/#{SESSION_FILE}.#{id}", 'r' ) do |f|

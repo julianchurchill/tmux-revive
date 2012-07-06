@@ -2,6 +2,58 @@ require_relative '../lib/tmuxrevive'
 
 describe TmuxRevive do
 
+  def tmuxrevive_dir
+    ENV['HOME'] + "/.tmuxrevive"
+  end
+
+  context "#list" do
+    before(:each) do
+      @tmuxrevive = TmuxRevive.new
+      @tmuxrevive.stub( :puts )
+    end
+
+    it "should open the tmuxrevive session directory" do
+      Dir.should_receive( :foreach ).with( "#{tmuxrevive_dir}" )
+
+      @tmuxrevive.list
+    end
+
+    it "should read all the available sessions from the sessions directory" do
+      Dir.stub( :foreach ).and_yield( "session.1" ).and_yield( "session.2" )
+      file = double( "session file" )
+      File.should_receive( :open ).with( "#{tmuxrevive_dir}/session.1" ).and_yield( file )
+      file.should_receive( :read )
+      file2 = double( "session file" )
+      File.should_receive( :open ).with( "#{tmuxrevive_dir}/session.2" ).and_yield( file2 )
+      file2.should_receive( :read )
+
+      @tmuxrevive.list
+    end
+
+    it "should only print the list of available session titles" do
+      Dir.stub( :foreach ).and_yield( "nonsession" ).and_yield( "session.1" ).and_yield( "session.2" )
+      File.stub( :open )
+      @tmuxrevive.should_receive( :puts ).with( /\Asession 1:\n.*?session 2:\n.*?\Z/ )
+
+      @tmuxrevive.list
+    end
+
+    it "should print the list of available session titles in ascending numerical order"
+
+    it "should print the session properties" do
+      Dir.stub( :foreach ).and_yield( "session.1" ).and_yield( "session.2" )
+      file = double( "session file" )
+      file.stub( :read ).and_return( "window_title george" )
+      File.stub( :open ).with( "#{tmuxrevive_dir}/session.1" ).and_yield( file )
+      file2 = double( "session file" )
+      file2.stub( :read ).and_return( "window_title mavis" )
+      File.stub( :open ).with( "#{tmuxrevive_dir}/session.2" ).and_yield( file2 )
+      @tmuxrevive.should_receive( :puts ).with( /\A.*\n    window_title george\n.*\n    window_title mavis\n\Z/ )
+
+      @tmuxrevive.list
+    end
+  end
+
   context "#restore" do
     before(:each) do
       @tmuxrevive = TmuxRevive.new
