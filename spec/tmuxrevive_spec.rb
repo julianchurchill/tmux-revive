@@ -17,13 +17,13 @@ describe TmuxRevive do
       @tmuxrevive.restore 123
     end
 
-    it "starts a new tmux session" do
-      @tmuxrevive.should_receive( :'`' ).with( /^TMUX= tmux new-session/ )
+    it "starts a new detached tmux session" do
+      @tmuxrevive.should_receive( :'`' ).with( /^TMUX= tmux new-session -d/ )
       @tmuxrevive.restore 123
     end
 
     it "sets the window title from the session file" do
-      @tmuxrevive.should_receive( :'`' ).with( / -n #{@window_title}$/ )
+      @tmuxrevive.should_receive( :'`' ).with( / -n #{@window_title} \;$/ )
       @tmuxrevive.restore 123
     end
   end

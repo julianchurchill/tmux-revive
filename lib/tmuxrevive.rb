@@ -7,7 +7,7 @@ class TmuxRevive
     File.open( "#{tmuxrevive_dir}/#{SESSION_FILE}.#{id}", 'r' ) do |f|
       content = f.read
       window_title = content[/window_title (.*)$/, 1 ]
-      `TMUX= tmux new-session -n #{window_title} \;`
+      `TMUX= tmux new-session -d -n #{window_title} \;`
     end
   end
 
