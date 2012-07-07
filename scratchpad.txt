@@ -1,15 +1,17 @@
 Like tmuxinator.
 Sample project to practice ruby/rspec/cucumber.
 
- - Session IDs
+= To do =
 
- - Would 'Aruba' be useful? It's a cucumber extension for testing command line programs.
- - Consider expanding existing cucumber stories to include arbitrary properties such as window size and position of panes in a scenario outline
+ - Expand existing cucumber stories to include arbitrary properties such as window size and position of panes in a scenario outline
    - Possibly try a couple of seperate properties stories before rationalizing
+
+= To improve =
+
+ - restore only creates a detached session - would be better to attach as well but Cucumber tests don't work when using a real attach (get a 'not a terminal' error), although this does work ok in normal use.
 
 = Features =
 
- - Save to text file, persistent store
  - Save all window titles
     - Restore all window titles in the order they were saved
  - Auto window titles should not be saved, as tmux infers them from the current command
@@ -22,11 +24,4 @@ Sample project to practice ruby/rspec/cucumber.
             - Special case for vim using viminfo/vim sessions?
         - Terminal history
         - Command history
-
- - List sessions from text files
- - list full session content
- - Summarise session content
-
- - Restore from text file
- - Pick a saved session and reproduce it
 
