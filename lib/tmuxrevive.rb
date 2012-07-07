@@ -3,15 +3,7 @@ class TmuxRevive
   SESSION_FILE = "session"
 
   def list
-    output = ""
-    Dir.foreach( "#{tmuxrevive_dir}" ) do |entry|
-      session_id = entry[/^.*\.(\d+)/,1]
-      if session_id != nil
-        output += "session #{session_id}:\n"
-        File.open( "#{tmuxrevive_dir}/#{entry}" ) { |file| output += "    #{file.read}\n" }
-      end
-    end
-    puts output
+    print_session_info gather_info_for_each_session
   end
 
   def restore *args
@@ -31,6 +23,27 @@ class TmuxRevive
   end
 
   private
+
+  def gather_info_for_each_session
+    all_session_info = []
+    Dir.foreach( "#{tmuxrevive_dir}" ) do |entry|
+      session_id = entry[/^.*\.(\d+)/,1]
+      if session_id != nil
+        session_info = "session #{session_id}:\n"
+        File.open( "#{tmuxrevive_dir}/#{entry}" ) { |file| session_info += "    #{file.read}\n" }
+        all_session_info += [ [ session_id, session_info ] ]
+      end
+    end
+    all_session_info
+  end
+
+  def print_session_info all_session_info
+    output = ""
+    all_session_info.sort! { |a,b| a[0] <=> b[0] }
+    all_session_info.each { |id,info| output += info }
+    puts output
+  end
+
 
   def find_next_free_session_id
     next_id = 1

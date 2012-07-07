@@ -38,7 +38,13 @@ describe TmuxRevive do
       @tmuxrevive.list
     end
 
-    it "should print the list of available session titles in ascending numerical order"
+    it "should print the list of available session titles in ascending numerical order" do
+      Dir.stub( :foreach ).and_yield( "session.2" ).and_yield( "session.3" ).and_yield( "session.1" )
+      File.stub( :open )
+      @tmuxrevive.should_receive( :puts ).with( /\Asession 1:\n.*?session 2:\n.*?session 3:\n.*?\Z/ )
+
+      @tmuxrevive.list
+    end
 
     it "should print the session properties" do
       Dir.stub( :foreach ).and_yield( "session.1" ).and_yield( "session.2" )
