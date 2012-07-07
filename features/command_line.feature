@@ -19,7 +19,6 @@ Feature: tmuxrevive command line program
         Then a new real tmux session should be started
         And the real tmux session window title should be "apples"
 
-    @wip
     Scenario: Multiple sessions have been saved and I want a list
         Given a session file named "~/.tmuxrevive/session.1" with:
             """
@@ -42,4 +41,5 @@ Feature: tmuxrevive command line program
                 window_title oranges
             session 3:
                 window_title papaya
+
             """
