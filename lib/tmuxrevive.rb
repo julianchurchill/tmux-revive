@@ -26,15 +26,26 @@ class TmuxRevive
 
   def gather_info_for_each_session
     all_session_info = []
-    Dir.foreach( "#{tmuxrevive_dir}" ) do |entry|
-      session_id = entry[/^.*\.(\d+)/,1]
-      if session_id != nil
-        session_info = "session #{session_id}:\n"
-        File.open( "#{tmuxrevive_dir}/#{entry}" ) { |file| session_info += "    #{file.read}\n" }
-        all_session_info += [ [ session_id, session_info ] ]
+    Dir.foreach( "#{tmuxrevive_dir}" ) do |filename|
+      if is_session_file( filename )
+        all_session_info += [ create_session_info( filename ) ]
       end
     end
     all_session_info
+  end
+
+  def is_session_file filename
+    session_id( filename ) != nil
+  end
+
+  def session_id filename
+    filename[/^#{SESSION_FILE}\.(\d+)/,1]
+  end
+
+  def create_session_info filename
+    session_info = "session #{session_id filename}:\n"
+    File.open( "#{tmuxrevive_dir}/#{filename}" ) { |file| session_info += "    #{file.read}\n" }
+    [ session_id( filename ), session_info ]
   end
 
   def print_session_info all_session_info
@@ -44,12 +55,13 @@ class TmuxRevive
     puts output
   end
 
-
   def find_next_free_session_id
     next_id = 1
     Dir.foreach( "#{tmuxrevive_dir}" ) do |f|
-      id = f[/^#{SESSION_FILE}\.(\d+)$/, 1].to_i
-      next_id = id + 1 if id >= next_id
+      if is_session_file f
+        id = session_id( f ).to_i
+        next_id = id + 1 if id >= next_id
+      end
     end
     next_id
   end
