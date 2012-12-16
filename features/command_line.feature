@@ -10,6 +10,21 @@ Feature: tmuxrevive command line program
         Then a session file named "~/.tmuxrevive/session.1" should exist
         And the session file "~/.tmuxrevive/session.1" should contain "window_title pears"
 
+    @wip
+    Scenario: A session can be saved to a file with all the properties I want
+        Given a running tmux session
+            And a window with a title of "pears"
+            And a window with a title of "pomelo"
+        When I run `tmuxrevive save` in the tmux session
+        Then a session file named "~/.tmuxrevive/session.1" should exist
+        And the session file "~/.tmuxrevive/session.1" should contain:
+            """
+            window:
+                title: pears
+            window:
+                title: pomelo
+            """
+
     Scenario: A saved session can be restored from a file
         Given a session file named "~/.tmuxrevive/session.1" with:
             """
